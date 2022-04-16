@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Installing dependencies
+sudo apt install -y python3-dev python3-babel python3-venv uwsgi uwsgi-plugin-python3 git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev shellcheck nginx
+
+# SearX
+## Creating and setting up user
+sudo -H useradd --shell /bin/bash --system \
+    --home-dir "/usr/local/searx" \
+    --comment 'Privacy-respecting metasearch engine' searx
+
+sudo -H mkdir "/usr/local/searx"
+sudo -H chown -R "searx:searx" "/usr/local/searx"
+
+## Installing searx
+sudo -H -u searx git clone "https://github.com/searx/searx.git" "/usr/local/searx/searx-src"
+sudo -H -u searx python3 -m venv "/usr/local/searx/searx-pyenv"
+echo "export SEARX_SETTINGS_PATH=\"/etc/searx/settings.yml\"" | sudo -H -u searx tee -a "/usr/local/searx/.profile" > /dev/null
+echo ". /usr/local/searx/searx-pyenv/bin/activate" | sudo -H -u searx tee -a "/usr/local/searx/.profile" > /dev/null
+sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -U pip setuptools wheel pyyaml
+sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -e "/usr/local/searx/searx-src"
+
+## Configurating SearX
+sudo -H mkdir -p "/etc/searx"
+sudo -H cp "/usr/local/searx/searx-src/utils/templates/etc/searx/use_default_settings.yml" "/etc/searx/settings.yml"
+
+sudo -H sed -i -e "s/ultrasecretkey/$(openssl rand -hex 16)/g" "/etc/searx/settings.yml"
+
+# uwsgi
+sudo -H cp -rf uwsgi/ /etc/
+sudo -H ln -s /etc/uwsgi/apps-available/searx.ini /etc/uwsgi/apps-enabled/
+sudo -H mkdir -p /run/uwsgi/app/searx/
+sudo -H chown -R searx:searx /run/uwsgi/app/searx/
+
+# Nginx
+sudo -H cp -rf nginx/ /etc/
+sudo -H sed -i -e "s:YOURIP:$(hostname -I | cut -d" " -f1):g" /etc/nginx/sites-available/searx
+sudo -H ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
+sudo -H rm -rf /etc/nginx/sites-enabled/default
+
+# SSL
+sudo -H mkdir -p /usr/local/searx/searx-src/certs
+openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -extensions EXT -config <( printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+sudo mv localhost.* /usr/local/searx/searx-src/certs
+
+# Restarting services
+sudo -H systemctl restart nginx
+sudo -H systemctl enable nginx
+sudo -H service uwsgi restart searx
