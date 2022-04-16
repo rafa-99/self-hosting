@@ -37,8 +37,8 @@ sudo -H cp -rf nginx/ /etc/
 sudo -H sed -i -e "s:YOURIP:$(hostname -I | cut -d" " -f1):g" /etc/nginx/sites-available/searx
 sudo -H ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
 sudo -H rm -rf /etc/nginx/sites-enabled/default
-sed -i s:"$(grep access_log /etc/nginx/nginx.conf | awk '{print $2}' )":\/dev\/null:g /etc/nginx/nginx.conf
-sed -i s:"$(grep error_log /etc/nginx/nginx.conf | awk '{print $2}' )":\/dev\/null:g /etc/nginx/nginx.conf
+sudo -H sed -i s:"$(grep access_log /etc/nginx/nginx.conf | awk '{print $2}' )":\/dev\/null:g /etc/nginx/nginx.conf
+sudo -H sed -i s:"$(grep error_log /etc/nginx/nginx.conf | awk '{print $2}' )":\/dev\/null:g /etc/nginx/nginx.conf
 
 # SSL
 sudo -H mkdir -p /usr/local/searx/searx-src/certs
