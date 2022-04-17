@@ -10,7 +10,7 @@ server {
     ssl_certificate /usr/local/searx/searx-src/certs/localhost.crt;
     ssl_certificate_key /usr/local/searx/searx-src/certs/localhost.key;
 
-    location / {
+    location /searx {
         include uwsgi_params;
         uwsgi_pass unix:/run/uwsgi/app/searx/socket;
     }
