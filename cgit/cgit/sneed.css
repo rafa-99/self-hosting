@@ -617,11 +617,11 @@ div#cgit ul.pager .current {
 
 div#cgit span.age-mins {
 	font-weight: bold;
-	color: white;
+	color: #00ffab;
 }
 
 div#cgit span.age-hours {
-	color: #080;
+	color: #00ffab;
 }
 
 div#cgit span.age-days {
@@ -629,23 +629,23 @@ div#cgit span.age-days {
 }
 
 div#cgit span.age-weeks {
-	color: #444;
+	color: #00ffab;
 }
 
 div#cgit span.age-months {
-	color: #888;
+	color: #00ffab;
 }
 
 div#cgit span.age-years {
-	color: #bbb;
+	color: #00ffab;
 }
 
 div#cgit span.insertions {
-	color: #080;
+	color: #00ffab;
 }
 
 div#cgit span.deletions {
-	color: #800;
+	color: #e83535;
 }
 
 div#cgit div.footer {
