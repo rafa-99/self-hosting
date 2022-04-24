@@ -22,6 +22,7 @@ sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -e "/usr/local/sea
 
 ## Configuring SearX
 sudo -H cp -rf "searx/" "/etc/"
+sudo -H sed -i s:YOURHOSTNAME:"$(hostname)":g /etc/searx/settings.yml
 
 # uwsgi
 sudo -H cp -rf uwsgi/ /etc/
