@@ -2,7 +2,7 @@ use_default_settings: True
 
 general:
     debug : False # Debug mode, only for development
-    instance_name : "Sneed's Feed and Seed" # displayed name
+    instance_name : "Sneed Searx" # displayed name
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
@@ -13,7 +13,7 @@ server:
     port : 8888
     bind_address : "127.0.0.1" # address to listen on
     secret_key : "" # change this!
-    base_url : "https://debian/searx" # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
+    base_url : "https://127.0.0.1/searx" # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     image_proxy : False # Proxying image results through searx
 
 ui:

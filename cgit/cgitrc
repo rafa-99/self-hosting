@@ -4,9 +4,10 @@
 
 css=/sneed.css
 logo=/sneed.png
+favicon=/sneed.ico
 
 virtual-root=/git
 scan-path=/srv/git/
 
-root-title=Sneed's Feed and Seed Git Server
+root-title=Git Sneed
 root-desc=Formerly Chucks.
