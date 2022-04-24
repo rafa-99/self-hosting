@@ -110,8 +110,6 @@ div#cgit table.tabs td.form select {
 div#cgit div.path {
 	margin: 0px;
 	padding: 5px 2em 2px 2em;
-	color: #000;
-	background-color: #eee;
 }
 
 div#cgit div.content {
@@ -301,7 +299,6 @@ div#cgit table.blob td.hashes,
 div#cgit table.blob td.lines {
 	margin: 0; padding: 0 0 0 0.5em;
 	vertical-align: top;
-	color: black;
 }
 
 div#cgit table.blob td.linenumbers {
