@@ -21,7 +21,6 @@ sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -U pip setuptools 
 sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -e "/usr/local/searx/searx-src"
 
 ## Configuring SearX
-sudo -H mkdir -p "/etc/searx"
 sudo -H cp -rf "searx/" "/etc/"
 
 # uwsgi
