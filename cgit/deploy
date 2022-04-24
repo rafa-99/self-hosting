@@ -17,6 +17,7 @@ sudo -H chown git:git /srv/git/
 
 # Cgit
 sudo -H cp -rf cgitrc /etc/
+sudo -H cp -rf cgit /usr/share/
 
 # Nginx
 sudo -H mkdir -p /etc/nginx/certs

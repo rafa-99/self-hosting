@@ -2,8 +2,8 @@
 # cgit config
 # see cgitrc(5) for details
 
-css=/cgit.css
-logo=/cgit.png
+css=/sneed.css
+logo=/sneed.png
 
 virtual-root=/git
 scan-path=/srv/git/
