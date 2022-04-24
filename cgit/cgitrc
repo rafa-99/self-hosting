@@ -1,0 +1,12 @@
+#
+# cgit config
+# see cgitrc(5) for details
+
+css=/cgit.css
+logo=/cgit.png
+
+virtual-root=/git
+scan-path=/srv/git/
+
+root-title=Sneed's Feed and Seed Git Server
+root-desc=Formerly Chucks.

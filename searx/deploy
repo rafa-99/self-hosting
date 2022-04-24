@@ -20,7 +20,7 @@ echo ". /usr/local/searx/searx-pyenv/bin/activate" | sudo -H -u searx tee -a "/u
 sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -U pip setuptools wheel pyyaml
 sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -e "/usr/local/searx/searx-src"
 
-## Configurating SearX
+## Configuring SearX
 sudo -H mkdir -p "/etc/searx"
 sudo -H cp "/usr/local/searx/searx-src/utils/templates/etc/searx/use_default_settings.yml" "/etc/searx/settings.yml"
 
@@ -33,16 +33,15 @@ sudo -H mkdir -p /run/uwsgi/app/searx/
 sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 
 # Nginx
+sudo -H mkdir -p /etc/nginx/certs
 sudo -H cp -rf nginx/ /etc/
-sudo -H sed -i -e "s:YOURIP:$(hostname -I | cut -d" " -f1):g" /etc/nginx/sites-available/searx
-sudo -H ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
+sudo -H ln -s /etc/nginx/sites-available/server /etc/nginx/sites-enabled/server
 sudo -H sed -i s:"$(grep access_log /etc/nginx/nginx.conf | awk '{print $2}' )":\/dev\/null\;:g /etc/nginx/nginx.conf
 sudo -H sed -i s:"$(grep error_log /etc/nginx/nginx.conf | awk '{print $2}' )":\/dev\/null\;:g /etc/nginx/nginx.conf
 
 # SSL
-sudo -H mkdir -p /usr/local/searx/searx-src/certs
 openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -extensions EXT -config <( printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
-sudo mv localhost.* /usr/local/searx/searx-src/certs
+sudo mv localhost.* /etc/nginx/certs
 
 # Restarting services
 sudo -H systemctl restart nginx

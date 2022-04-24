@@ -1,0 +1,12 @@
+server
+{
+	server_name hostname.local;
+
+	listen 443 ssl;
+	listen [::]:443 ssl;
+
+	ssl_certificate /etc/nginx/certs/localhost.crt;
+	ssl_certificate_key /etc/nginx/certs/localhost.key;
+
+	include pages/*.conf;
+}
