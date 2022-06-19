@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Installing dependencies
-sudo apt install -y python3-dev python3-babel python3-venv uwsgi uwsgi-plugin-python3 git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev shellcheck nginx
+sudo apt install -y python3-dev python3-babel python3-venv uwsgi uwsgi-plugin-python3 git build-essential libxslt1-dev zlib1g-dev libffi-dev libssl-dev shellcheck nginx
 
 # SearX
 ## Creating and setting up user
@@ -13,16 +13,17 @@ sudo -H mkdir "/usr/local/searx"
 sudo -H chown -R "searx:searx" "/usr/local/searx"
 
 ## Installing searx
-sudo -H -u searx git clone "https://github.com/searx/searx.git" "/usr/local/searx/searx-src"
+sudo -H -u searx git clone "https://github.com/searxng/searxng" "/usr/local/searx/searx-src"
 sudo -H -u searx python3 -m venv "/usr/local/searx/searx-pyenv"
-echo "export SEARX_SETTINGS_PATH=\"/etc/searx/settings.yml\"" | sudo -H -u searx tee -a "/usr/local/searx/.profile" > /dev/null
+echo "export SEARX_SETTINGS_PATH=\"/etc/searxng/settings.yml\"" | sudo -H -u searx tee -a "/usr/local/searx/.profile" > /dev/null
 echo ". /usr/local/searx/searx-pyenv/bin/activate" | sudo -H -u searx tee -a "/usr/local/searx/.profile" > /dev/null
 sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -U pip setuptools wheel pyyaml
 sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -e "/usr/local/searx/searx-src"
 
-## Configuring SearX
-sudo -H cp -rf "searx/" "/etc/"
+## Configuring SearXNG
+sudo -H cp -rf "searxng/" "/etc/"
 sudo -H sed -i s:YOURHOSTNAME:"$(hostname)":g /etc/searx/settings.yml
+sudo -H sed -i s:SERVERKEY:"$(openssl rand -hex 16)":g /etc/searx/settings.yml
 
 # uwsgi
 sudo -H cp -rf uwsgi/ /etc/

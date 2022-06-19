@@ -1,5 +1,5 @@
-# SearX
-Self hosted SearX instance with default configurations.
+# SearXNG
+Self hosted SearXNG instance with default configurations.
 To install just run the script using:
 
 `bash deploy`
