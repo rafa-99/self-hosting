@@ -22,8 +22,8 @@ sudo -H -u searx /usr/local/searx/searx-pyenv/bin/pip install -e "/usr/local/sea
 
 ## Configuring SearXNG
 sudo -H cp -rf "searxng/" "/etc/"
-sudo -H sed -i s:YOURHOSTNAME:"$(hostname)":g /etc/searx/settings.yml
-sudo -H sed -i s:SERVERKEY:"$(openssl rand -hex 16)":g /etc/searx/settings.yml
+sudo -H sed -i s:YOURHOSTNAME:"$(hostname)":g /etc/searxng/settings.yml
+sudo -H sed -i s:SERVERKEY:"$(openssl rand -hex 16)":g /etc/searxng/settings.yml
 
 # uwsgi
 sudo -H cp -rf uwsgi/ /etc/
